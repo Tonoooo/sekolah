@@ -1,0 +1,52 @@
+tahapan web
+1. install laravel: composer create-project laravel/laravel:^9.5 hendri_ujikom
+2. login regs:
+    ~ composer require laravel/ui
+    ~ php artisan ui bootstrap --auth
+    ~ npm install
+    ~ npm run dev
+3. buat database
+    ~ masukan ke file env
+    ~ cmd: php artisan make:model siswa -m
+    ~ buat rancangan tabel disiwa create tabel & !!siswas diganti dengan siswa, tambahkan nis bertipe integer & unique,
+        string nama,jurusan ,tempat_lahir,tanggal_lahir,foto->nullable()
+    ~ tambahkan kode di file models siswa
+4. controller
+    ~ cmd: php artisan make:controller siswaController --resouce
+    ~ difile route web nya tambahkan route siswa:  Route::resource('/siswa', siswaController::class);
+    ~ masih difile route web: use App\Http\Controllers\siswaController;
+5. folder siswa
+    ~ buat folder siswa
+    ~ buat file index & create
+    ~ masukkan kodenya ke index, heading HTML ganti dengan @extends('layouts.app') , @section('content')
+    ~ masih difile index, potong bagian start form sampai akhir form, pindahkan ke create
+6. coba login
+    ~ difile app\Providers\RouteServiceProvider.php  ganti home jadi siswa: public const HOME = '/siswa';
+    ~ pada file homeController copy bagian function construct, lalu tempel didalam class controller disetelah kurung buka kurawal (diatas komentar)
+    ~ cmd: php artisan migrate, php artisan serve
+7. siswa blade
+8. komponen pesan blade
+9. siswaController
+10. foto
+    ~ fil env baris 20: FILESYSTEM_DISK=public
+    ~ cmd: php artisan storage:link
+11. pagination
+    ~ pada file app/providers/AppServiceProvider.php   tambahkan:
+        - use Illuminate/Pagiantion/Paginator;
+        - di dalam function boot=   Paginator::useBootstrapFive();
+12. sorting
+/**
+ * ~~~~~~~~~~ sorting
+ * terminal: composer require kyslik/column-sortable
+ * di config/app.php didalam providers tambhankan:
+ *   Kyslik\ColumnSortable\ColumnSortableServiceProvider::class
+ * terminal: php artisan vendor:publish --provider="Kyslik\ColumnSortable\ColumnSortableServiceProvider" --tag="config"
+ * di models siswa tambahkan:
+ *      import sortablenya:   use Kyslik\ColumnSortable\Sortable;
+ *      didalam classnya pake:  use HasFactory, Sortable;   // gak apaapa error
+ * difile controller ini untuk query database setelah dua titik dua(::) gunakan sortablelink()
+ *      contoh: $data = siswa::sortablelink();
+ * difile blade, pada bagian table <th>pake @sortablelink('namakolom')
+ */
+
+
